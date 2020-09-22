@@ -1,4 +1,5 @@
 {
   "name": "tdplaylist",
-  "db": "localhost:3000"
+  "db": "localhost:3000",
+  "td_jwtPrivateKey": "tdSecretSauce"
 }

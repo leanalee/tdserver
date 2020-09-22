@@ -1,0 +1,3 @@
+{"level":"error","message":"Cannot read property 'db' of undefined Cannot read property 'db' of undefined","stack":"TypeError: Cannot read property 'db' of undefined\n    at /home/linna/Documents/Proj/miniProjects/tdserver/node_modules/winston-mongodb/lib/winston-mongodb.js:154:41\n    at processTicksAndRejections (internal/process/task_queues.js:93:5)"}
+{"level":"error","message":"Cannot read property 'db' of undefined Cannot read property 'db' of undefined","stack":"TypeError: Cannot read property 'db' of undefined\n    at /home/linna/Documents/Proj/miniProjects/tdserver/node_modules/winston-mongodb/lib/winston-mongodb.js:154:41\n    at processTicksAndRejections (internal/process/task_queues.js:93:5)"}
+{"message":"Listening on port 3000...","level":"info"}

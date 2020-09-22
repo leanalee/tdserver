@@ -1,6 +1,7 @@
 const express = require("express");
 const router = express.Router();
 const { Task, validateTask } = require("../models/taskModel");
+const authWithToken = require("../middleware/authwithToken");
 
 router.get("/", async (req, res) => {
   const tasks = await Task.find();
@@ -13,7 +14,7 @@ router.get("/:id", async (req, res) => {
   res.send(task);
 });
 
-router.post("/", async (req, res) => {
+router.post("/", authWithToken, async (req, res) => {
   const validated = validateTask(req.body);
   if (validated.error) {
     return res.status(400).send(validated.error.message);
