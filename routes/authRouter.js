@@ -1,10 +1,11 @@
-const { User, genAuthToken } = require("../models/userModel");
+const { User } = require("../models/userModel");
 const express = require("express");
 const Joi = require("joi");
 const router = express.Router();
 const bcrypt = require("bcrypt");
-const jwt = require("jsonwebtoken");
-const config = require("config");
+
+//generates authentication token for users who successfully login with
+//valid username/email and password
 
 router.post("/", async (req, res) => {
   const validated = validateLogin(req.body);

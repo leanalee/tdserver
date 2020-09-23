@@ -3,9 +3,7 @@ const router = express.Router();
 const { User, validateUser } = require("../models/userModel");
 const _ = require("lodash");
 const bcrypt = require("bcrypt");
-const jwt = require("jsonwebtoken");
-const config = require("config");
-const authWithToken = require("../middleware/authwithToken");
+const authWithToken = require("../middleware/authWithToken");
 
 router.get("/me", authWithToken, async (req, res) => {
   const user = await User.findById(req.user._id).select("-password");

@@ -1,12 +1,14 @@
 const mongoose = require("mongoose");
+const config = require("config");
 
 module.exports = function () {
+  const db = config.get("db");
   mongoose
-    .connect("mongodb://localhost:27017/tdplaylist", {
+    .connect(db, {
       useUnifiedTopology: true,
       useNewUrlParser: true,
       useCreateIndex: true,
     })
-    .then(() => console.log("Connected to MongoDB..."))
+    .then(() => console.log(`Connected to ${db}...`))
     .catch((ex) => console.log("Could not connect to MongoDB...", ex));
 };

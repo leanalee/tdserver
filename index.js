@@ -9,5 +9,9 @@ require("./startup/startDB")();
 require("./startup/startRoutes")(app);
 
 const port = process.env.PORT || 3000;
-app.listen(port, () => console.log(`Listening on port ${port}...`));
+const server = app.listen(port, () =>
+  console.log(`Listening on port ${port}...`)
+);
 debug("Debugging turned on...");
+
+module.exports = server;

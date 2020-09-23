@@ -10,6 +10,6 @@ module.exports = function (app) {
   app.use("/api/tasks", tasks);
   app.use("/api/users", users);
   app.use("/api/auth", auth);
-  app.use("/api/goal", goals);
+  app.use("/api/goals", goals);
   app.use(errorHandle);
 };

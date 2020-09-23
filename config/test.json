@@ -1,5 +1,5 @@
 {
   "name": "tdplaylist",
-  "db": "mongodb://localhost:27017/tdplaylist",
+  "db": "mongodb://localhost:27017/tdplaylist_test",
   "td_jwtPrivateKey": "tdSecretSauce"
 }

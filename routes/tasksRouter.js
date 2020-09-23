@@ -1,7 +1,7 @@
 const express = require("express");
 const router = express.Router();
 const { Task, validateTask } = require("../models/taskModel");
-const authWithToken = require("../middleware/authwithToken");
+const authWithToken = require("../middleware/authWithToken");
 
 router.get("/", async (req, res) => {
   const tasks = await Task.find();
