@@ -5,34 +5,46 @@ const Task = mongoose.model(
   "Task",
   new mongoose.Schema({
     title: { type: String, required: true, min: 3, max: 255 },
+    ownerId: {
+      type: String,
+      // type: mongoose.Schema.Types.ObjectId,
+      // ref: "User",
+      required: true,
+    },
+
+    dateCreated: {
+      type: Date,
+      default: Date.now(),
+    },
+
     status: {
       type: String,
-      required: true,
       enum: ["new", "inprogress", "completed", "onhold", "continuous"],
+      default: "new",
       lowercase: true,
     },
-    ownerId: {
-      type: mongoose.Schema.Types.ObjectId,
-      ref: "User",
-      required: true,
-    },
-    links: { type: String },
-    dueDate: { type: Date },
-    hrsWorked: { type: Number, max: 255 },
+
+    hrsWorked: { type: Number, max: 255, default: 0 },
     hrsNeeded: { type: Number, max: 255 },
+
+    dueDate: { type: Date },
     scheduled: { type: Date },
-    label: { type: [String] }, //can select multiple tasks and update label
-    parentTask: { type: String }, //id and name of parent task
-    // notes: {type: String, maxlength: 255},
-    //music: link to music
+    goal: {
+      type: mongoose.Schema.Types.ObjectId,
+      ref: "Goal",
+    },
+    //tags: {type: String, maxlength: 255, minlength:1}
+    //can select multiple tasks and update label
+    //notes: {type: String, maxlength: 255},
+    //links: { type: String },
   })
 );
 
 function validateTask(task) {
   const taskSchema = Joi.object({
     title: Joi.string().min(3).max(255).required(),
-    status: Joi.string().required(),
     ownerId: Joi.string().required(),
+    status: Joi.string(),
     links: Joi.string(),
     dueDate: Joi.date(),
     hrsWorked: Joi.number(),

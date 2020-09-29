@@ -2,6 +2,13 @@ const express = require("express");
 const router = express.Router();
 const { Task, validateTask } = require("../models/taskModel");
 const authWithToken = require("../middleware/authWithToken");
+const validateObjectId = require("../middleware/validateObjectId");
+
+//Should have POST /
+//Should have GET /
+//Should have GET /:id
+//Should have PUT / or PATCH /
+//SHOULD have DELETE /
 
 router.get("/", async (req, res) => {
   const tasks = await Task.find();
@@ -14,28 +21,28 @@ router.get("/:id", async (req, res) => {
   res.send(task);
 });
 
-router.post("/", authWithToken, async (req, res) => {
+router.post("/", async (req, res) => {
   const validated = validateTask(req.body);
   if (validated.error) {
     return res.status(400).send(validated.error.message);
   }
-
-  const task = new Task({
+  let task = new Task({
     ...req.body,
   });
   try {
-    const result = await task.save();
-    return res.send(result);
+    task = await task.save();
+    res.send(task);
   } catch (ex) {
     return res.status(404).send(ex.message);
   }
 });
 
-router.put("/:id", async (req, res) => {
+router.put("/:id", [validateObjectId, authWithToken], async (req, res) => {
   const validated = validateTask(req.body);
   if (validated.error) {
     return res.status(400).send(validated.error);
   }
+
   const task = await Task.findByIdAndUpdate(
     req.params.id,
     {
@@ -46,16 +53,16 @@ router.put("/:id", async (req, res) => {
 
   if (!task) return res.status(404).send("Task not found");
 
-  return res.send(task);
+  res.send(task);
 });
 
-router.delete("/:id", async (req, res) => {
-  const task = await findbyIdandDelete(req.params.id);
+router.delete("/:id", [validateObjectId, authWithToken], async (req, res) => {
+  const task = await Task.findByIdAndDelete(req.params.id);
   if (!task) {
     return res.status(404).send("Task was not found");
   }
 
-  return res.send(task);
+  res.send(task);
 });
 
 module.exports = router;
