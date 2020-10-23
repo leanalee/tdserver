@@ -5,6 +5,11 @@ const Goal = mongoose.model(
   "Goal",
   new mongoose.Schema({
     name: { type: String, required: true, minlength: 3, maxlength: 255 },
+    ownerId: {
+      type: String,
+      // type: mongoose.Schema.Types.ObjectId,
+      // ref: "User",
+    },
     dateCreated: { type: Date, default: Date.now() },
   })
 );
@@ -12,6 +17,8 @@ const Goal = mongoose.model(
 function validateGoal(goal) {
   const goalSchema = Joi.object({
     name: Joi.string().min(3).max(255).required(),
+    ownerId: Joi.string(),
+    dateCreated: Joi.date(),
   });
 
   return goalSchema.validate(goal);

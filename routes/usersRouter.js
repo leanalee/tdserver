@@ -34,7 +34,10 @@ router.post("/", async (req, res) => {
 
   const td_token = user.genAuthToken();
 
-  res.header("td_auth_token", td_token).send(_.pick(user, ["name", "email"]));
+  res
+    .header("td_auth_token", td_token)
+    .header("access-control-expose-headers", "td_auth_token")
+    .send(_.pick(user, ["_id", "name", "email"]));
 });
 
 module.exports = router;

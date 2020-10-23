@@ -14,7 +14,10 @@ describe("Unit Test for userModel", () => {
       const testJwt = testUser.genAuthToken();
 
       expect(testJwt).toBe(
-        jwt.sign({ _id: testUser._id }, config.get("td_jwtPrivateKey"))
+        jwt.sign(
+          { _id: testUser._id, name: testUser.name, email: testUser.email },
+          config.get("td_jwtPrivateKey")
+        )
       );
 
       const decodedTestJwt = jwt.verify(

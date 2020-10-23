@@ -24,7 +24,7 @@ const Task = mongoose.model(
       lowercase: true,
     },
 
-    hrsWorked: { type: Number, max: 255, default: 0 },
+    minsWorked: { type: {} },
     hrsNeeded: { type: Number, max: 255 },
 
     dueDate: { type: Date },
@@ -47,7 +47,7 @@ function validateTask(task) {
     status: Joi.string(),
     links: Joi.string(),
     dueDate: Joi.date(),
-    hrsWorked: Joi.number(),
+    minsWorked: Joi.object(),
     hrsNeeded: Joi.number(),
     scheduled: Joi.date(),
     label: Joi.array(), //can select multiple tasks and update label

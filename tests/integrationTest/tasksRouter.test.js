@@ -114,7 +114,7 @@ describe("/api/tasks", () => {
     let testTask;
     let testTaskId;
     let testTitleUpdate;
-    let testHrsWorked;
+    let testHrsNeeded;
 
     beforeEach(async () => {
       testTask = new Task({ title: testTitle, ownerId: testUser });
@@ -122,7 +122,6 @@ describe("/api/tasks", () => {
       testTaskId = testTask._id;
       testTitleUpdate =
         "updated existing test task --test tasks router put method ";
-      testHrsWorked = 5;
     });
 
     afterEach(async () => {
@@ -136,7 +135,7 @@ describe("/api/tasks", () => {
         .send({
           title: testTitleUpdate,
           ownerId: testUser,
-          hrsWorked: testHrsWorked,
+          hrsNeeded: testHrsNeeded,
         });
     };
 
@@ -145,7 +144,7 @@ describe("/api/tasks", () => {
 
       expect(res.status).toBe(200);
       expect(res.body).toHaveProperty("title", testTitleUpdate);
-      expect(res.body).toHaveProperty("hrsWorked", testHrsWorked);
+      expect(res.body).toHaveProperty("hrsNeeded", testHrsNeeded);
     });
 
     test("should return 404 from validateObjectId middleware for invalid task id", async () => {
@@ -165,7 +164,7 @@ describe("/api/tasks", () => {
     });
 
     test("should return 400 if invalid update parameters", async () => {
-      testHrsWorked = "string 5";
+      testHrsNeeded = "string 5";
       const res = await exec();
 
       expect(res.status).toBe(400);
