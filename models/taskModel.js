@@ -30,8 +30,9 @@ const Task = mongoose.model(
     dueDate: { type: Date },
     scheduled: { type: Date },
     goal: {
-      type: mongoose.Schema.Types.ObjectId,
-      ref: "Goal",
+      type: String,
+      // type: mongoose.Schema.Types.ObjectId,
+      // ref: "Goal",
     },
     //tags: {type: String, maxlength: 255, minlength:1}
     //can select multiple tasks and update label
@@ -46,12 +47,12 @@ function validateTask(task) {
     ownerId: Joi.string().required(),
     status: Joi.string(),
     links: Joi.string(),
-    dueDate: Joi.date(),
-    minsWorked: Joi.object(),
+    dueDate: Joi.date().allow(""),
+    minsWorked: Joi.object().optional(),
     hrsNeeded: Joi.number(),
-    scheduled: Joi.date(),
+    scheduled: Joi.date().allow(""),
+    goal: Joi.string().allow(""),
     label: Joi.array(), //can select multiple tasks and update label
-    parentTask: Joi.string(), //id and name of parent task
   });
 
   return taskSchema.validate(task);

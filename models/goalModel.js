@@ -10,6 +10,13 @@ const Goal = mongoose.model(
       // type: mongoose.Schema.Types.ObjectId,
       // ref: "User",
     },
+    status: {
+      type: String,
+      enum: ["new", "inprogress", "completed", "onhold", "continuous"],
+      default: "new",
+      lowercase: true,
+    },
+    dueDate: { type: Date },
     dateCreated: { type: Date, default: Date.now() },
   })
 );
@@ -18,6 +25,8 @@ function validateGoal(goal) {
   const goalSchema = Joi.object({
     name: Joi.string().min(3).max(255).required(),
     ownerId: Joi.string(),
+    status: Joi.string(),
+    dueDate: Joi.date(),
     dateCreated: Joi.date(),
   });
 

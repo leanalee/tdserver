@@ -15,8 +15,22 @@ router.get("/", async (req, res) => {
   res.send(tasks);
 });
 
-router.get("/:id", async (req, res) => {
-  const task = await Task.findById(req.params.id);
+router.get("/:ownerId", async (req, res) => {
+  const tasks = await Task.find({ ownerId: req.params.ownerId });
+  res.send(tasks);
+});
+
+// router.get("/:id", async (req, res) => {
+//   const task = await Task.findById(req.params.id);
+//   if (!task) return res.status(404).send("Task was not found");
+//   res.send(task);
+// });
+
+router.get("/:ownerId/:id", async (req, res) => {
+  const task = await Task.find({
+    ownerId: req.params.ownerId,
+    _id: req.params.id,
+  });
   if (!task) return res.status(404).send("Task was not found");
   res.send(task);
 });

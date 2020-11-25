@@ -16,8 +16,22 @@ router.get("/", async (req, res) => {
   res.send(goals);
 });
 
+router.get("/:ownerId", async (req, res) => {
+  const goals = await Goal.find({ ownerId: req.params.ownerId });
+  res.send(goals);
+});
+
 router.get("/:id", valObjId, async (req, res) => {
   const goal = await Goal.findById(req.params.id);
+  if (!goal) return res.status(404).send("Goal was not found");
+  res.send(goal);
+});
+
+router.get("/:ownerId/:id", valObjId, async (req, res) => {
+  const goal = await Goal.find({
+    ownerId: req.params.ownerId,
+    _id: req.params.id,
+  });
   if (!goal) return res.status(404).send("Goal was not found");
   res.send(goal);
 });
@@ -27,8 +41,7 @@ router.post("/", authWithToken, async (req, res) => {
   if (validated.error) return res.status(400).send("Invalid input");
 
   let goal = new Goal({
-    name: req.body.name,
-    taskList: req.body.taskList,
+    ...req.body,
   });
 
   goal = await goal.save();
@@ -36,15 +49,21 @@ router.post("/", authWithToken, async (req, res) => {
 });
 
 router.put("/:id", [valObjId, authWithToken], async (req, res) => {
-  let goal = await Goal.findById(req.params.id);
-  if (!goal) return res.status(404).send("Goal was not found");
+  const validated = validateGoal(req.body);
+  if (validated.error) {
+    return res.status(400).send(validated.error);
+  }
 
-  goal.set({
-    name: req.body.name,
-    taskList: req.body.taskList,
-  });
+  const goal = await Goal.findByIdAndUpdate(
+    req.params.id,
+    {
+      ...req.body,
+    },
+    { new: true }
+  );
 
-  goal = await goal.save();
+  if (!goal) return res.status(404).send("Task not found");
+
   res.send(goal);
 });
 
