@@ -70,6 +70,16 @@ router.put("/:id", [validateObjectId, authWithToken], async (req, res) => {
   res.send(task);
 });
 
+router.patch("/:id", [validateObjectId, authWithToken], async (req, res) => {
+  const task = await Task.findByIdAndUpdate(req.params.id, {
+    $set: {
+      minsWorked: req.body["minsWorked"],
+    },
+  });
+  if (!task) return res.status(404).send("Task not found");
+  res.send(task);
+});
+
 router.delete("/:id", [validateObjectId, authWithToken], async (req, res) => {
   const task = await Task.findByIdAndDelete(req.params.id);
   if (!task) {
