@@ -1,9 +1,9 @@
+require("dotenv").config();
 const mongoose = require("mongoose");
 const request = require("supertest");
 const { User } = require("../../models/userModel");
 const bcrypt = require("bcrypt");
 const jwt = require("jsonwebtoken");
-const config = require("config");
 let server;
 
 //Should not have GET /
@@ -48,9 +48,7 @@ describe("api/auth", () => {
     test("should return 200 for valid email and pw", async () => {
       const res = await exec();
       expect(res.status).toBe(200);
-      expect(
-        jwt.verify(res.text, config.get("td_jwtPrivateKey"))
-      ).toHaveProperty("_id");
+      expect(jwt.verify(res.text, process.env.TD_PKY)).toHaveProperty("_id");
     });
 
     test("should return 400 for users with wrong pw", async () => {

@@ -1,8 +1,10 @@
+require("dotenv").config();
 const mongoose = require("mongoose");
-const config = require("config");
 
 module.exports = function () {
-  const db = config.get("db");
+  const db = (process.env.NODE_ENV = "test"
+    ? process.env.DB_TEST
+    : process.env.DB);
   mongoose
     .connect(db, {
       useUnifiedTopology: true,

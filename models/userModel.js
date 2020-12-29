@@ -1,7 +1,7 @@
 const mongoose = require("mongoose");
 const Joi = require("joi");
 const jwt = require("jsonwebtoken");
-const config = require("config");
+require("dotenv").config();
 
 const userSchema = new mongoose.Schema({
   name: { type: String, minlength: 3, maxlength: 50, default: "User" },
@@ -13,12 +13,15 @@ const userSchema = new mongoose.Schema({
     maxlength: 255,
     unique: true,
   },
-  
+
   password: { type: String, minlength: 8, maxlength: 1024, required: true },
 });
 
 userSchema.methods.genAuthToken = function () {
-  return jwt.sign({ _id: this._id , name: this.name, email: this.email}, config.get("td_jwtPrivateKey"));
+  return jwt.sign(
+    { _id: this._id, name: this.name, email: this.email },
+    process.env.TD_PKY
+  );
 };
 
 const User = mongoose.model("User", userSchema);

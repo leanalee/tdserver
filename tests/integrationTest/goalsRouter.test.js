@@ -169,7 +169,7 @@ describe("/api/goals", () => {
       const res = await exec();
 
       expect(res.status).toBe(404);
-      expect(res.text).toMatch(/^.*was not found/i);
+      expect(res.text).toMatch(/^.* not found/i);
     });
   });
 

@@ -1,6 +1,6 @@
-const config = require("config");
+require("dotenv").config();
 module.exports = function () {
-  if (!config.get("td_jwtPrivateKey")) {
-    throw new Error("FATAL ERROR: jwtPrivateKey is not defined");
+  if (!process.env.TD_PKY) {
+    throw new Error("FATAL ERROR: TD_PKY is not defined");
   }
 };

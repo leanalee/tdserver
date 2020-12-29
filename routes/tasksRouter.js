@@ -4,12 +4,6 @@ const { Task, validateTask } = require("../models/taskModel");
 const authWithToken = require("../middleware/authWithToken");
 const validateObjectId = require("../middleware/validateObjectId");
 
-//Should have POST /
-//Should have GET /
-//Should have GET /:id
-//Should have PUT / or PATCH /
-//SHOULD have DELETE /
-
 router.get("/", async (req, res) => {
   const tasks = await Task.find();
   res.send(tasks);

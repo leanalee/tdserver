@@ -1,6 +1,6 @@
 const { User, validateUser } = require("../../models/userModel");
 const jwt = require("jsonwebtoken");
-const config = require("config");
+require("dotenv").config();
 
 describe("Unit Test for userModel", () => {
   describe("userModel methods", () => {
@@ -16,14 +16,11 @@ describe("Unit Test for userModel", () => {
       expect(testJwt).toBe(
         jwt.sign(
           { _id: testUser._id, name: testUser.name, email: testUser.email },
-          config.get("td_jwtPrivateKey")
+          process.env.TD_PKY
         )
       );
 
-      const decodedTestJwt = jwt.verify(
-        testJwt,
-        config.get("td_jwtPrivateKey")
-      );
+      const decodedTestJwt = jwt.verify(testJwt, process.env.TD_PKY);
       expect(decodedTestJwt).toHaveProperty("_id");
     });
   });
