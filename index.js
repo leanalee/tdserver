@@ -1,4 +1,5 @@
-require("dotenv").config();
+const { port, td_pky } = require("./config");
+
 const winston = require("winston");
 const debug = require("debug")("tdplaylist:dev");
 const express = require("express");
@@ -11,7 +12,6 @@ require("./startup/startConfig")();
 require("./startup/startDB")();
 require("./startup/startRoutes")(app);
 
-const port = process.env.PORT || 3901;
 const server = app.listen(port, () =>
   console.log(`Listening on port ${port}...`)
 );

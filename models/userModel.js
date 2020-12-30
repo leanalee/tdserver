@@ -1,7 +1,7 @@
 const mongoose = require("mongoose");
 const Joi = require("joi");
 const jwt = require("jsonwebtoken");
-require("dotenv").config();
+const { td_pky } = require("../config");
 
 const userSchema = new mongoose.Schema({
   name: { type: String, minlength: 3, maxlength: 50, default: "User" },
@@ -20,7 +20,7 @@ const userSchema = new mongoose.Schema({
 userSchema.methods.genAuthToken = function () {
   return jwt.sign(
     { _id: this._id, name: this.name, email: this.email },
-    process.env.TD_PKY
+    td_pky
   );
 };
 

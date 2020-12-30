@@ -1,5 +1,5 @@
 const jwt = require("jsonwebtoken");
-require("dotenv").config();
+const { td_pky } = require("../config");
 
 //authenticates a user for a URL path. prevents access if not authenticated.
 function authWithToken(req, res, next) {
@@ -7,7 +7,7 @@ function authWithToken(req, res, next) {
   if (!token) return res.status(401).send("Access Denied. Not logged in.");
 
   try {
-    const decodedJwt = jwt.verify(token, process.env.TD_PKY);
+    const decodedJwt = jwt.verify(token, td_pky);
     req.user = decodedJwt;
     next();
   } catch (ex) {
