@@ -1,9 +1,8 @@
 const express = require("express");
-const mongoose = require("mongoose");
 const router = express.Router();
 const { Goal, validateGoal } = require("../models/goalModel");
-const valObjId = require("../middleware/validateObjectId");
 const authWithToken = require("../middleware/authWithToken");
+const validateObjectId = require("../middleware/validateObjectId");
 
 router.get("/", async (req, res) => {
   const goals = await Goal.find();
@@ -36,7 +35,7 @@ router.post("/", authWithToken, async (req, res) => {
   res.send(goal);
 });
 
-router.put("/:id", [valObjId, authWithToken], async (req, res) => {
+router.put("/:id", [validateObjectId, authWithToken], async (req, res) => {
   const validated = validateGoal(req.body);
   if (validated.error) {
     return res.status(400).send(validated.error);
@@ -55,7 +54,7 @@ router.put("/:id", [valObjId, authWithToken], async (req, res) => {
   res.send(goal);
 });
 
-router.delete("/:id", [valObjId, authWithToken], async (req, res) => {
+router.delete("/:id", [validateObjectId, authWithToken], async (req, res) => {
   const goal = await Goal.findByIdAndRemove(req.params.id);
   if (!goal)
     return res.status(404).send("Goal was with given ID was not found");
