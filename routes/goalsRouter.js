@@ -10,12 +10,12 @@ router.get("/", async (req, res) => {
   res.send(goals);
 });
 
-router.get("/:ownerId", valObjId, async (req, res) => {
+router.get("/:ownerId", async (req, res) => {
   const goals = await Goal.find({ ownerId: req.params.ownerId });
   res.send(goals);
 });
 
-router.get("/:ownerId/:id", valObjId, async (req, res) => {
+router.get("/:ownerId/:id", async (req, res) => {
   const goal = await Goal.find({
     ownerId: req.params.ownerId,
     _id: req.params.id,

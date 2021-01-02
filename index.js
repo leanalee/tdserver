@@ -1,4 +1,4 @@
-const { port, td_pky } = require("./config");
+const { port } = require("./config");
 
 const winston = require("winston");
 const debug = require("debug")("tdplaylist:dev");
