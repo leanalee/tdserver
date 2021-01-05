@@ -23,7 +23,7 @@ router.get("/:ownerId/:id", async (req, res) => {
   res.send(goal);
 });
 
-router.post("/", authWithToken, async (req, res) => {
+router.post("/", async (req, res) => {
   const validated = validateGoal(req.body);
   if (validated.error) return res.status(400).send("Invalid input");
 
@@ -35,7 +35,7 @@ router.post("/", authWithToken, async (req, res) => {
   res.send(goal);
 });
 
-router.put("/:id", [validateObjectId, authWithToken], async (req, res) => {
+router.put("/:id", validateObjectId, async (req, res) => {
   const validated = validateGoal(req.body);
   if (validated.error) {
     return res.status(400).send(validated.error);

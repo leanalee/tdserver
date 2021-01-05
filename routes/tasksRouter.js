@@ -45,7 +45,7 @@ router.post("/", async (req, res) => {
   }
 });
 
-router.put("/:id", [validateObjectId, authWithToken], async (req, res) => {
+router.put("/:id", validateObjectId, async (req, res) => {
   const validated = validateTask(req.body);
   if (validated.error) {
     return res.status(400).send(validated.error);
@@ -64,7 +64,7 @@ router.put("/:id", [validateObjectId, authWithToken], async (req, res) => {
   res.send(task);
 });
 
-router.patch("/:id", [validateObjectId, authWithToken], async (req, res) => {
+router.patch("/:id", validateObjectId, async (req, res) => {
   const task = await Task.findByIdAndUpdate(req.params.id, {
     $set: {
       minsWorked: req.body["minsWorked"],
