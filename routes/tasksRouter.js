@@ -64,10 +64,21 @@ router.put("/:id", validateObjectId, async (req, res) => {
   res.send(task);
 });
 
-router.patch("/:id", validateObjectId, async (req, res) => {
+router.patch("/minsworked/:id", validateObjectId, async (req, res) => {
+  console.log(req.body);
   const task = await Task.findByIdAndUpdate(req.params.id, {
     $set: {
       minsWorked: req.body["minsWorked"],
+    },
+  });
+  if (!task) return res.status(404).send("Task not found");
+  res.send(task);
+});
+
+router.patch("/done/:id", validateObjectId, async (req, res) => {
+  const task = await Task.findByIdAndUpdate(req.params.id, {
+    $set: {
+      done: req.body["done"],
     },
   });
   if (!task) return res.status(404).send("Task not found");
