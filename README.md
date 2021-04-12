@@ -1,5 +1,15 @@
 # tdserver
 
+### Front-end for tdplaylist web app
+
+- tdplaylist repo
+
+## Back-end for tdplaylist web app
+
+- node.js
+- express
+- mongoDB
+
 ## Models
 
 1. Task Model
