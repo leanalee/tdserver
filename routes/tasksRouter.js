@@ -65,7 +65,6 @@ router.put("/:id", validateObjectId, async (req, res) => {
 });
 
 router.patch("/minsworked/:id", validateObjectId, async (req, res) => {
-  console.log(req.body);
   const task = await Task.findByIdAndUpdate(req.params.id, {
     $set: {
       minsWorked: req.body["minsWorked"],
