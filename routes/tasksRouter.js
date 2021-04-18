@@ -29,6 +29,9 @@ router.get("/:ownerId/:id", async (req, res) => {
   res.send(task);
 });
 
+//use post for create or update rather than put or patch
+//less code to maintain
+
 router.post("/", async (req, res) => {
   const validated = validateTask(req.body);
   if (validated.error) {

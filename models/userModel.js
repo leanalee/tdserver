@@ -17,6 +17,8 @@ const userSchema = new mongoose.Schema({
   password: { type: String, minlength: 8, maxlength: 1024, required: true },
 });
 
+// add an expiration for the token
+// include fingerprint of the browser so that it prevents access from a different request source
 userSchema.methods.genAuthToken = function () {
   return jwt.sign(
     { _id: this._id, name: this.name, email: this.email },

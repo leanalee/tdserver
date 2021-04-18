@@ -10,6 +10,7 @@ router.get("/", async (req, res) => {
 });
 
 router.get("/:ownerId", async (req, res) => {
+  // should validate that ownerId is a mongo id object
   const goals = await Goal.find({ ownerId: req.params.ownerId });
   res.send(goals);
 });

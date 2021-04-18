@@ -17,7 +17,7 @@ const Goal = mongoose.model(
       lowercase: true,
     },
     dueDate: { type: Date },
-    dateCreated: { type: Date, default: Date.now() },
+    dateCreated: { type: Date, default: Date.now },
   })
 );
 
